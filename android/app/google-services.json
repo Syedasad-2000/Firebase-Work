@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "385248161061",
+    "project_id": "mwf-firebase",
+    "storage_bucket": "mwf-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:385248161061:android:1df45a67f5b6b74449fecc",
+        "android_client_info": {
+          "package_name": "com.example.firebase_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9hACJIwhpqFMGFO3oTFrIlOhZjIeYk8U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
