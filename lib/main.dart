@@ -35,22 +35,14 @@ class _MyHomeState extends State<MyHome> {
 
   void userRegister()async{
     try{
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(email: userEmail.text, password: userPassword.text);
-      userEmail.clear();
-      userPassword.clear();
-    } on FirebaseAuthException catch(ex){
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("${ex.code.toString()}")));
-      userEmail.clear();
-      userPassword.clear();
-    };
-  }
+      // Firebase Data Insert
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: userEmail.text,
+          password: userPassword.text);
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    userEmail.dispose();
-    userPassword.dispose();
-    super.dispose();
+    } on FirebaseAuthException catch(error){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("${error.code.toString()}")));
+    }
   }
 
   @override
