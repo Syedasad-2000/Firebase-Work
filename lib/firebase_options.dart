@@ -44,38 +44,38 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyClMFZxbgseI4qF_moIby5A5JnGqp5PIQc',
-    appId: '1:385248161061:web:c3a1a60f0f94f18649fecc',
-    messagingSenderId: '385248161061',
-    projectId: 'mwf-firebase',
-    authDomain: 'mwf-firebase.firebaseapp.com',
-    storageBucket: 'mwf-firebase.appspot.com',
-    measurementId: 'G-0RY7CESDEN',
+    apiKey: 'AIzaSyDiCx-SDsaZCNyhtlBSdNtINGbzlhjWijA',
+    appId: '1:603120962485:web:dc590e80166883cb3627fc',
+    messagingSenderId: '603120962485',
+    projectId: 'fir-mwf-b0a87',
+    authDomain: 'fir-mwf-b0a87.firebaseapp.com',
+    storageBucket: 'fir-mwf-b0a87.appspot.com',
+    measurementId: 'G-1RJVC5WFKG',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyB9hACJIwhpqFMGFO3oTFrIlOhZjIeYk8U',
-    appId: '1:385248161061:android:1df45a67f5b6b74449fecc',
-    messagingSenderId: '385248161061',
-    projectId: 'mwf-firebase',
-    storageBucket: 'mwf-firebase.appspot.com',
+    apiKey: 'AIzaSyC3KmwngJwfY_Lz6P7kfGKSiMIXYfoq4Po',
+    appId: '1:603120962485:android:0d8d83b9393ee24a3627fc',
+    messagingSenderId: '603120962485',
+    projectId: 'fir-mwf-b0a87',
+    storageBucket: 'fir-mwf-b0a87.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyC0BkiDNx96wBHjEn0U722dLKvGRVYzoZE',
-    appId: '1:385248161061:ios:4b3498fb541510cc49fecc',
-    messagingSenderId: '385248161061',
-    projectId: 'mwf-firebase',
-    storageBucket: 'mwf-firebase.appspot.com',
+    apiKey: 'AIzaSyDAHuAK1jNJRmDk7Nq64zaMvTMIJn7Hc6w',
+    appId: '1:603120962485:ios:daeea9fa61ee29c43627fc',
+    messagingSenderId: '603120962485',
+    projectId: 'fir-mwf-b0a87',
+    storageBucket: 'fir-mwf-b0a87.appspot.com',
     iosBundleId: 'com.example.firebaseProject',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyC0BkiDNx96wBHjEn0U722dLKvGRVYzoZE',
-    appId: '1:385248161061:ios:c562d4a1929b49a849fecc',
-    messagingSenderId: '385248161061',
-    projectId: 'mwf-firebase',
-    storageBucket: 'mwf-firebase.appspot.com',
+    apiKey: 'AIzaSyDAHuAK1jNJRmDk7Nq64zaMvTMIJn7Hc6w',
+    appId: '1:603120962485:ios:1d4276b00c8380bc3627fc',
+    messagingSenderId: '603120962485',
+    projectId: 'fir-mwf-b0a87',
+    storageBucket: 'fir-mwf-b0a87.appspot.com',
     iosBundleId: 'com.example.firebaseProject.RunnerTests',
   );
 }
