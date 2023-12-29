@@ -46,6 +46,7 @@ class _UserRegisterState extends State<UserRegister> {
     await FirebaseFirestore.instance.collection("userData").doc(userID).set(uAdd);
 
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("User Added")));
+    Navigator.pop(context);
   }
   @override
   Widget build(BuildContext context) {
