@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_project/update_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
@@ -50,119 +51,145 @@ class _UserRegisterState extends State<UserRegister> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-            child: TextFormField(
-              controller: userName,
-              decoration: InputDecoration(
-                  label: Text("Enter Your Name"),
-                  hintText: "john doe",
-                  prefixIcon: Icon(Icons.person),
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
-                      borderRadius: BorderRadius.circular(14)
-                  )
+      body: SingleChildScrollView(
+        physics: ScrollPhysics(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+              child: TextFormField(
+                controller: userName,
+                decoration: InputDecoration(
+                    label: Text("Enter Your Name"),
+                    hintText: "john doe",
+                    prefixIcon: Icon(Icons.person),
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                        borderRadius: BorderRadius.circular(14)
+                    )
+                ),
               ),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-            child: TextFormField(
-              controller: userAddress,
-              decoration: InputDecoration(
-                  label: Text("Enter Your Address"),
-                  hintText: "Street 123",
-                  prefixIcon: Icon(Icons.location_on),
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
-                      borderRadius: BorderRadius.circular(14)
-                  )
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+              child: TextFormField(
+                controller: userAddress,
+                decoration: InputDecoration(
+                    label: Text("Enter Your Address"),
+                    hintText: "Street 123",
+                    prefixIcon: Icon(Icons.location_on),
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                        borderRadius: BorderRadius.circular(14)
+                    )
+                ),
               ),
             ),
-          ),
 
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-            child: TextFormField(
-              controller: userEmail,
-              decoration: InputDecoration(
-                  label: Text("Enter Your Email"),
-                  hintText: "johndoe@gmail.com",
-                  prefixIcon: Icon(Icons.mail),
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
-                      borderRadius: BorderRadius.circular(14)
-                  )
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+              child: TextFormField(
+                controller: userEmail,
+                decoration: InputDecoration(
+                    label: Text("Enter Your Email"),
+                    hintText: "johndoe@gmail.com",
+                    prefixIcon: Icon(Icons.mail),
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                        borderRadius: BorderRadius.circular(14)
+                    )
+                ),
               ),
             ),
-          ),
 
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-            child: TextFormField(
-              controller: userPassword,
-              decoration: InputDecoration(
-                  label: Text("Enter Your Password"),
-                  hintText: "12**BA@",
-                  prefixIcon: Icon(Icons.key),
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
-                      borderRadius: BorderRadius.circular(14)
-                  )
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+              child: TextFormField(
+                controller: userPassword,
+                decoration: InputDecoration(
+                    label: Text("Enter Your Password"),
+                    hintText: "12**BA@",
+                    prefixIcon: Icon(Icons.key),
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                        borderRadius: BorderRadius.circular(14)
+                    )
+                ),
               ),
             ),
-          ),
 
-          Center(
-            child: Container(
-              width: 120,
-              height: 40,
-              child: Center(
-                child: ElevatedButton(onPressed: (){
-                  userAddWithCustomID();
-                }, child: Text("Add User")),
+            Center(
+              child: Container(
+                width: 120,
+                height: 40,
+                child: Center(
+                  child: ElevatedButton(onPressed: (){
+                    userAddWithCustomID();
+                  }, child: Text("Add User")),
+                ),
               ),
             ),
-          ),
 
-          StreamBuilder(
-            stream: FirebaseFirestore.instance.collection("userData").snapshots(),
-            builder: (context, snapshot) {
+            StreamBuilder(
+              stream: FirebaseFirestore.instance.collection("userData").snapshots(),
+              builder: (context, snapshot) {
 
-              if(snapshot.connectionState == ConnectionState.waiting){
-                return CircularProgressIndicator();
-              }
+                if(snapshot.connectionState == ConnectionState.waiting){
+                  return CircularProgressIndicator();
+                }
 
-              if(snapshot.hasData){
-                var dataLengtht = snapshot.data!.docs.length;
+                if(snapshot.hasData){
+                  var dataLengtht = snapshot.data!.docs.length;
 
-                return ListView.builder(
-                  itemCount: dataLengtht,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
+                  return ListView.builder(
+                    itemCount: dataLengtht,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    physics: ScrollPhysics(),
+                    itemBuilder: (context, index) {
 
-                    String userName = snapshot.data!.docs[index]["userName"];
-                    String userEmail = snapshot.data!.docs[index]["userEmail"];
+                      String userName = snapshot.data!.docs[index]["userName"];
+                      String userEmail = snapshot.data!.docs[index]["userEmail"];
+                      String userAddress = snapshot.data!.docs[index]["userAddress"];
+                      String userPassword = snapshot.data!.docs[index]["userPassword"];
+                      String userID = snapshot.data!.docs[index]["userId"];
+                      return  GestureDetector(
+                        onDoubleTap: ()async{
+                          try{
+                            await FirebaseFirestore.instance.collection("userData").doc(userID).delete();
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("User Deleted Successfully")));
 
-                    return  ListTile(
-                      leading: Icon(Icons.person),
-                      title: Text(userName),
-                      subtitle: Text(userEmail),
-                    );
-                  },);
-              }
+                          } on FirebaseException catch(ex){
+                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(ex.code.toString())));
+                          }
+                        },
+                        child: ListTile(
+                          leading: Icon(Icons.person),
+                          title: Text(userName),
+                          subtitle: Text(userEmail),
+                          trailing: IconButton(onPressed:(){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => UpdateScreen(
+                              uName: userName,
+                              uEmail: userEmail,
+                              uAddress: userAddress,
+                              uPassword: userPassword,
+                              uID: userID,
+                            ),));
+                          },icon:Icon(Icons.update))
+                        ),
+                      );
+                    },);
+                }
 
-              if(snapshot.hasError){
-                return Icon(Icons.error,color: Colors.red,);
-              }
+                if(snapshot.hasError){
+                  return Icon(Icons.error,color: Colors.red,);
+                }
 
-
-              return Container();
-            },)
-        ],
+                return Container();
+              },)
+          ],
+        ),
       ),
     );
   }
