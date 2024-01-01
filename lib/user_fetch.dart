@@ -24,15 +24,6 @@ class _UserFetchState extends State<UserFetch> {
             height: 30,
           ),
 
-          Center(
-            child: ElevatedButton(onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => UserRegister(),));
-            }, child: Text("Add New User")),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-
          StreamBuilder(
              stream: FirebaseFirestore.instance.collection("userData").snapshots(),
              builder: (context, snapshot) {

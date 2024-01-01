@@ -46,7 +46,6 @@ class _UserRegisterState extends State<UserRegister> {
     await FirebaseFirestore.instance.collection("userData").doc(userID).set(uAdd);
 
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("User Added")));
-    Navigator.pop(context);
   }
   @override
   Widget build(BuildContext context) {
@@ -127,7 +126,42 @@ class _UserRegisterState extends State<UserRegister> {
                 }, child: Text("Add User")),
               ),
             ),
-          )
+          ),
+
+          StreamBuilder(
+            stream: FirebaseFirestore.instance.collection("userData").snapshots(),
+            builder: (context, snapshot) {
+
+              if(snapshot.connectionState == ConnectionState.waiting){
+                return CircularProgressIndicator();
+              }
+
+              if(snapshot.hasData){
+                var dataLengtht = snapshot.data!.docs.length;
+
+                return ListView.builder(
+                  itemCount: dataLengtht,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+
+                    String userName = snapshot.data!.docs[index]["userName"];
+                    String userEmail = snapshot.data!.docs[index]["userEmail"];
+
+                    return  ListTile(
+                      leading: Icon(Icons.person),
+                      title: Text(userName),
+                      subtitle: Text(userEmail),
+                    );
+                  },);
+              }
+
+              if(snapshot.hasError){
+                return Icon(Icons.error,color: Colors.red,);
+              }
+
+
+              return Container();
+            },)
         ],
       ),
     );
