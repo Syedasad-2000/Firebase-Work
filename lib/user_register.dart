@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_project/update_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
 class UserRegister extends StatefulWidget {
@@ -16,6 +19,8 @@ class _UserRegisterState extends State<UserRegister> {
   TextEditingController userAddress = TextEditingController();
   TextEditingController userEmail = TextEditingController();
   TextEditingController userPassword = TextEditingController();
+
+  File? userProfile;
 
 
   // void addUser()async{
@@ -56,6 +61,33 @@ class _UserRegisterState extends State<UserRegister> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
+            const SizedBox(
+              height: 30,
+            ),
+
+            GestureDetector(
+                onTap: ()async{
+                  XFile? pickImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+                  if (pickImage != null) {
+                    File convertedFile = File(pickImage.path);
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Image selected")));
+                    setState(() {
+                      userProfile = convertedFile;
+                    });
+                  }
+                  else{
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Image not selected")));
+                  }
+                },
+                child: Center(
+                  child: CircleAvatar(
+                    radius: 40,
+                    backgroundColor: Colors.blue,
+                    backgroundImage: userProfile != null ? FileImage(userProfile!) : null ,
+                  ),
+                )),
+
             Container(
               margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
               child: TextFormField(
