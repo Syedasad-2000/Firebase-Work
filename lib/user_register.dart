@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_project/update_screen.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
@@ -37,16 +38,29 @@ class _UserRegisterState extends State<UserRegister> {
   // }
 
 
-  void userAddWithCustomID()async{
+  void userWithImage()async{
 
     var userID = Uuid().v4();
+
+    UploadTask uploadTask = FirebaseStorage.instance.ref().child("Image").child(userID).putFile(userProfile!);
+    TaskSnapshot taskSnapshot = await uploadTask;
+    String imageUrl = await taskSnapshot.ref.getDownloadURL();
+    userAddWithCustomID(
+        userID: userID,
+        userImage: imageUrl);
+  }
+
+
+  void userAddWithCustomID({String? userImage, String? userID})async{
+
 
     Map<String, dynamic> uAdd = {
       "userId" : userID,
       "userName" : userName.text,
       "userAddress": userAddress.text,
       "userEmail": userEmail.text,
-      "userPassword": userPassword.text
+      "userPassword": userPassword.text,
+      "userImage" : userImage
     };
 
     await FirebaseFirestore.instance.collection("userData").doc(userID).set(uAdd);
@@ -157,7 +171,7 @@ class _UserRegisterState extends State<UserRegister> {
                 height: 40,
                 child: Center(
                   child: ElevatedButton(onPressed: (){
-                    userAddWithCustomID();
+                    userWithImage();
                   }, child: Text("Add User")),
                 ),
               ),
@@ -185,6 +199,7 @@ class _UserRegisterState extends State<UserRegister> {
                       String userEmail = snapshot.data!.docs[index]["userEmail"];
                       String userAddress = snapshot.data!.docs[index]["userAddress"];
                       String userPassword = snapshot.data!.docs[index]["userPassword"];
+                      String userImage = snapshot.data!.docs[index]["userImage"];
                       String userID = snapshot.data!.docs[index]["userId"];
                       return  GestureDetector(
                         onDoubleTap: ()async{
@@ -197,7 +212,10 @@ class _UserRegisterState extends State<UserRegister> {
                           }
                         },
                         child: ListTile(
-                          leading: Icon(Icons.person),
+                          leading: CircleAvatar(
+                            backgroundColor: Colors.blue,
+                            backgroundImage: NetworkImage(userImage),
+                          ),
                           title: Text(userName),
                           subtitle: Text(userEmail),
                           trailing: IconButton(onPressed:(){
