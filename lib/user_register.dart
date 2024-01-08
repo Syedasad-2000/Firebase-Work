@@ -82,7 +82,7 @@ class _UserRegisterState extends State<UserRegister> {
 
             GestureDetector(
                 onTap: ()async{
-                  XFile? pickImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+                  XFile? pickImage = await ImagePicker().pickImage(source: ImageSource.camera);
                   if (pickImage != null) {
                     File convertedFile = File(pickImage.path);
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Image selected")));
@@ -205,6 +205,7 @@ class _UserRegisterState extends State<UserRegister> {
                         onDoubleTap: ()async{
                           try{
                             await FirebaseFirestore.instance.collection("userData").doc(userID).delete();
+                            await FirebaseStorage.instance.refFromURL(userImage).delete();
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("User Deleted Successfully")));
 
                           } on FirebaseException catch(ex){
@@ -225,6 +226,7 @@ class _UserRegisterState extends State<UserRegister> {
                               uAddress: userAddress,
                               uPassword: userPassword,
                               uID: userID,
+                              uImage: userImage,
                             ),));
                           },icon:Icon(Icons.update))
                         ),
