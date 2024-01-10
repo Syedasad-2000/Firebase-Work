@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_project/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -21,6 +22,8 @@ class _LoginScreenState extends State<LoginScreen> {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: userEmail.text,
           password: userPassword.text);
+      SharedPreferences userCred = await SharedPreferences.getInstance();
+      userCred.setString("userCred", userEmail.text);
      Navigator.push(context, MaterialPageRoute(builder:  (context) => MyDashboard(),));
 
     } on FirebaseAuthException catch(error){
