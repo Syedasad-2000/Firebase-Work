@@ -42,13 +42,12 @@ class _SplashScreenState extends State<SplashScreen> {
   Future screenRedirector()async{
     SharedPreferences userCred = await SharedPreferences.getInstance();
 
-    return userCred.getString("userCred");
+    return userCred.getString("userEmail");
   }
 
   @override
   void initState() {
     // TODO: implement initState
-    // Timer(Duration(milliseconds: 5000), () =>Navigator.push(context, MaterialPageRoute(builder:  (context) => LoginScreen(),)));
     screenRedirector().then((value) {
       if (value != null ) {
         Timer(Duration(milliseconds: 5000), () => Navigator.push(context, MaterialPageRoute(builder:  (context) => MyDashboard(),)));
@@ -57,6 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Timer(Duration(milliseconds: 5000), () =>Navigator.push(context, MaterialPageRoute(builder:  (context) => LoginScreen(),)));
       }
     },);
+
     super.initState();
   }
 

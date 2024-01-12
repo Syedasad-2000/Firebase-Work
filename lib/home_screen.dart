@@ -23,7 +23,7 @@ class _MyDashboardState extends State<MyDashboard> {
 
   Future getUserCred()async{
     SharedPreferences userCred = await SharedPreferences.getInstance();
-    return userCred.getString("userCred");
+    return userCred.getString("userEmail");
   }
 
   @override
