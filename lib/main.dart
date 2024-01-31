@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_project/firebase_options.dart';
 import 'package:firebase_project/home_screen.dart';
 import 'package:firebase_project/login_screen.dart';
+import 'package:firebase_project/tabbar_screen.dart';
 import 'package:firebase_project/user_fetch.dart';
 import 'package:firebase_project/user_register.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: SplashScreen(),
+      home: TabBarScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
